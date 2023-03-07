@@ -1,16 +1,27 @@
-import React, {PropsWithChildren} from 'react';
-import {Text, View} from 'react-native';
+import React from 'react';
+import {Text, View, ViewProps} from 'react-native';
+import styled from 'styled-components';
+import {useAppSelector} from '@store/hooks';
 
-interface CustomHeaderProps extends PropsWithChildren {
+interface CustomHeaderProps extends ViewProps {
   title: string;
 }
 
-function CustomHeader({title}: CustomHeaderProps): JSX.Element {
+function CustomHeader({title, style}: CustomHeaderProps): JSX.Element {
+  const commentsCount = useAppSelector(state => state.comments.length);
+
   return (
-    <View>
+    <HeaderViewStyled style={style}>
       <Text>{title}</Text>
-    </View>
+      <Text>{commentsCount}</Text>
+    </HeaderViewStyled>
   );
 }
+
+const HeaderViewStyled = styled(View)`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+`;
 
 export default CustomHeader;

@@ -1,33 +1,37 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import {SafeAreaView, StatusBar, Text, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import CustomHeader from '@components/CustomHeader';
 import {Provider} from 'react-redux';
-import {store} from '@src/store';
-import CommentList from '@components/Comment/CommentList';
+import Home from '@src/screens/Home';
+import styled from 'styled-components';
+import {PersistGate} from 'redux-persist/integration/react';
+import store from '@src/store';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const SafeAreaViewStyled = styled(SafeAreaView)`
+    background-color: ${isDarkMode ? Colors.darker : Colors.lighter};
+  `;
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   return (
-    <Provider store={store}>
-      <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <CustomHeader title="OvsNews" />
-        <CommentList />
-      </SafeAreaView>
+    <Provider store={store.store}>
+      <PersistGate
+        persistor={store.persistor}
+        loading={<Text>Loading...</Text>}>
+        <SafeAreaViewStyled>
+          <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={backgroundStyle.backgroundColor}
+          />
+          <Home />
+        </SafeAreaViewStyled>
+      </PersistGate>
     </Provider>
   );
 }
