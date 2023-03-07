@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   useColorScheme,
 } from 'react-native';
@@ -10,6 +9,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import CustomHeader from '@components/CustomHeader';
 import {Provider} from 'react-redux';
 import {store} from '@src/store';
+import CommentList from '@components/Comment/CommentList';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -25,11 +25,8 @@ function App(): JSX.Element {
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
           backgroundColor={backgroundStyle.backgroundColor}
         />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <CustomHeader title="OvsNews" />
-        </ScrollView>
+        <CustomHeader title="OvsNews" />
+        <CommentList />
       </SafeAreaView>
     </Provider>
   );
