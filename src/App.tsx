@@ -7,6 +7,7 @@ import Home from '@src/screens/Home';
 import styled from 'styled-components';
 import {PersistGate} from 'redux-persist/integration/react';
 import store from '@src/store';
+import CommentScreen from '@src/screens/CommentScreen';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -29,7 +30,8 @@ function App(): JSX.Element {
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
           />
-          <Home />
+          {/*<Home />*/}
+          <CommentScreen />
         </SafeAreaViewStyled>
       </PersistGate>
     </Provider>
