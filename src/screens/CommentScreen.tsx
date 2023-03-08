@@ -1,18 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {StyleProp, Text, View, ViewStyle} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Button, StyleProp, Text, View, ViewStyle} from 'react-native';
 import {Comment} from '@src/model/Comment';
 import styled from 'styled-components';
 import getOneComment from '@src/services/comments/fetchOne';
 import {AxiosError} from 'axios';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export interface CommentScreenProps {
+export interface CommentScreenProps extends NativeStackScreenProps<any> {
   style?: StyleProp<ViewStyle>;
 }
 
-function CommentScreen(props: CommentScreenProps): JSX.Element {
+function CommentScreen({navigation}: CommentScreenProps): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<AxiosError | null>(null);
   const [comment, setComment] = useState<Comment>();
+
+  const handleBack = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
 
   useEffect(() => {
     getOneComment(3)
@@ -36,6 +41,7 @@ function CommentScreen(props: CommentScreenProps): JSX.Element {
 
   return (
     <ViewStyled>
+      <Button title="Retour" onPress={handleBack} />
       <TitleTextStyled>{comment?.email}</TitleTextStyled>
       <Text>{comment?.body}</Text>
     </ViewStyled>

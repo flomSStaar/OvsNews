@@ -6,12 +6,14 @@ import styled from 'styled-components';
 import {useAppDispatch} from '@store/hooks';
 import {AddCommentPayload} from '@store/comments/payloads/AddCommentPayload';
 import {addComment} from '@store/comments';
-import ScrollView = Animated.ScrollView;
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export interface HomeProps extends ViewProps {}
+export interface HomeProps extends ViewProps, NativeStackScreenProps<any> {}
 
-function Home(props: HomeProps): JSX.Element {
+function Home({navigation, route}: HomeProps): JSX.Element {
   const dispatch = useAppDispatch();
+
+  console.log(route);
 
   const handleAdd = useCallback(() => {
     const newComment = new AddCommentPayload(
@@ -23,14 +25,19 @@ function Home(props: HomeProps): JSX.Element {
     dispatch(addComment(newComment));
   }, [dispatch]);
 
+  const handleGoToComment = useCallback(() => {
+    navigation.navigate('CommentScreen');
+  }, [navigation]);
+
   return (
     <ViewContainerStyled>
       <CustomHeaderStyled title="OvsNews" />
       <ViewMainStyled>
+        <PressableStyled onPress={handleGoToComment} />
         <PressableStyled onPress={handleAdd}>
           <Text>Add comment</Text>
         </PressableStyled>
-        <CommentListStyled />
+        <CommentListStyled navigation={navigation} route={route} />
       </ViewMainStyled>
     </ViewContainerStyled>
   );
@@ -50,8 +57,7 @@ const CustomHeaderStyled = styled(CustomHeader)`
   padding: 8px;
 `;
 
-const CommentListStyled = styled(CommentList)`
-`;
+const CommentListStyled = styled(CommentList)``;
 
 const PressableStyled = styled(Pressable)`
   padding: 8px;
