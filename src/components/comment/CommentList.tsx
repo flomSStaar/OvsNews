@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {FlatList, StyleProp, ViewStyle} from 'react-native';
+import {FlatList, StyleProp, Text, ViewStyle} from 'react-native';
 import CommentItem from '@components/comment/CommentItem';
 import {useAppSelector} from '@store/hooks';
 
@@ -15,6 +15,7 @@ function CommentList({style}: CommentListProps): JSX.Element {
     <FlatList
       style={style}
       data={comments}
+      ListEmptyComponent={<Text>Aucun commentaire</Text>}
       renderItem={({item}) => (
         <CommentItem key={item.id.toString()} comment={item} />
       )}

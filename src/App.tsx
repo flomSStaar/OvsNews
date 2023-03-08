@@ -30,8 +30,8 @@ function App(): JSX.Element {
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
           />
-          {/*<Home />*/}
-          <CommentScreen />
+          <Home />
+          {/*<CommentScreen />*/}
         </SafeAreaViewStyled>
       </PersistGate>
     </Provider>
