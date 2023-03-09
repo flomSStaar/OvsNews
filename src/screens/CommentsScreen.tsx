@@ -1,27 +1,26 @@
 import React, {useCallback} from 'react';
-import {Button, Text, View} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {
-  CommentsScreenNavigationProp,
-  CommentsScreenRouteProp,
-} from '@src/navigators/types';
+import {Pressable, SafeAreaView, Text} from 'react-native';
+import CommentList from '@components/reusable/comment/CommentList';
+import {useNavigation} from '@react-navigation/native';
+import {CommentsScreenNavigationProp} from '@src/navigators/types';
 
 function CommentsScreen(): JSX.Element {
   const navigation = useNavigation<CommentsScreenNavigationProp>();
-  const route = useRoute<CommentsScreenRouteProp>();
 
-  const {post} = route.params;
-
-  const handleBack = useCallback(() => {
-    navigation.goBack();
+  const handlePress = useCallback(() => {
+    navigation.navigate('Settings', {
+      param: 15,
+    });
   }, [navigation]);
 
   return (
-    <View>
+    <SafeAreaView>
       <Text>CommentsScreen</Text>
-      <Text>{post}</Text>
-      <Button title="Posts" onPress={handleBack} />
-    </View>
+      <Pressable onPress={handlePress}>
+        <Text>Go to settings</Text>
+      </Pressable>
+      <CommentList />
+    </SafeAreaView>
   );
 }
 

@@ -1,5 +1,14 @@
 import React, {useCallback} from 'react';
-import {Button, Text, View} from 'react-native';
+import {
+  Button,
+  Image,
+  Platform,
+  Pressable,
+  SafeAreaView,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {PostsScreenNavigationProp} from '@src/navigators/types';
 
@@ -13,17 +22,17 @@ function PostsScreen(): JSX.Element {
   }, [navigation]);
 
   const handleGoToComments = useCallback(() => {
-    navigation.navigate('Comments', {
-      post: 6,
-    });
+    navigation.navigate('Comments');
   }, [navigation]);
 
   return (
-    <View>
-      <Button title="Settings" onPress={handleGoToSettings} />
+    <SafeAreaView>
+      <Pressable style={{backgroundColor: 'blue'}} onPress={handleGoToSettings}>
+        <Text>Settings</Text>
+      </Pressable>
       <Button title="Comments" onPress={handleGoToComments} />
       <Text>Posts</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 

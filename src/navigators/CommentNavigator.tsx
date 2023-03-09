@@ -1,16 +1,17 @@
 import React from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import CommentList from '@components/comment/CommentList';
-import CommentScreen from '@src/screens/CommentScreen';
+import CommentDetailScreen from '@src/screens/CommentDetailScreen';
+import CommentsScreen from '@src/screens/CommentsScreen';
+import {CommentsNativeStackParamList} from '@src/navigators/types';
 
 function CommentNavigator(): JSX.Element {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<CommentsNativeStackParamList>();
 
   return (
-    <Stack.Navigator initialRouteName="">
-      <Stack.Screen name="CommentList" component={CommentList} />
-      <Stack.Screen name="CommentDetails" component={CommentScreen} />
+    <Stack.Navigator initialRouteName="CommentList">
+      <Stack.Screen name="CommentList" component={CommentsScreen} />
+      <Stack.Screen name="CommentDetail" component={CommentDetailScreen} />
     </Stack.Navigator>
   );
 }

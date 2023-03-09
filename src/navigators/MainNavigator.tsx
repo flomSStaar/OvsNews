@@ -5,7 +5,7 @@ import PostsScreen from '@src/screens/PostsScreen';
 import SettingsScreen from '@src/screens/SettingsScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomTabParamList} from '@src/navigators/types';
-import CommentsScreen from '@src/screens/CommentsScreen';
+import CommentNavigator from '@src/navigators/CommentNavigator';
 
 function MainNavigator(): JSX.Element {
   const BottomTabNavigator = createBottomTabNavigator<BottomTabParamList>();
@@ -29,6 +29,7 @@ function MainNavigator(): JSX.Element {
         },
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: 'gray',
+        headerShown: false,
       })}>
       <BottomTabNavigator.Screen
         name="Posts"
@@ -42,13 +43,7 @@ function MainNavigator(): JSX.Element {
           param: 10,
         }}
       />
-      <BottomTabNavigator.Screen
-        name="Comments"
-        component={CommentsScreen}
-        initialParams={{
-          post: 18,
-        }}
-      />
+      <BottomTabNavigator.Screen name="Comments" component={CommentNavigator} />
     </BottomTabNavigator.Navigator>
   );
 }

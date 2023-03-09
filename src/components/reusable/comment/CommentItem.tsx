@@ -1,24 +1,29 @@
 import React, {useCallback} from 'react';
 
-import {Text, TouchableNativeFeedback, View, ViewProps} from 'react-native';
+import {
+  GestureResponderEvent,
+  Text,
+  TouchableNativeFeedback,
+  View,
+  ViewProps,
+} from 'react-native';
 import {Comment} from '@src/model/Comment';
 import styled from 'styled-components';
-import {useAppDispatch} from '@store/hooks';
-import {deleteComment} from '@store/comments';
 
 export interface CommentItemProps extends ViewProps {
   comment: Comment;
+  onItemPress: ((commentId: number) => void) | undefined;
 }
 
-function CommentItem({comment}: CommentItemProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  const handlePress = useCallback(() => {
-    dispatch(deleteComment(comment.id));
-  }, [comment.id, dispatch]);
+function CommentItem({comment, onItemPress}: CommentItemProps): JSX.Element {
+  const handleItemPress = useCallback(() => {
+    if (onItemPress) {
+      onItemPress(comment.id);
+    }
+  }, [onItemPress, comment.id]);
 
   return (
-    <TouchableNativeFeedback onPress={handlePress}>
+    <TouchableNativeFeedback onPress={handleItemPress}>
       <ContainerViewStyled>
         <TitleTextStyled>{comment.name}</TitleTextStyled>
         <TextStyled>{comment.body}</TextStyled>

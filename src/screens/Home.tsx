@@ -1,19 +1,16 @@
 import {Animated, Button, Pressable, Text, View, ViewProps} from 'react-native';
 import CustomHeader from '@components/CustomHeader';
-import CommentList from '@components/comment/CommentList';
+import CommentList from '@components/reusable/comment/CommentList';
 import React, {useCallback} from 'react';
 import styled from 'styled-components';
 import {useAppDispatch} from '@store/hooks';
 import {AddCommentPayload} from '@store/comments/payloads/AddCommentPayload';
 import {addComment} from '@store/comments';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export interface HomeProps extends ViewProps, NativeStackScreenProps<any> {}
+export interface HomeProps extends ViewProps {}
 
-function Home({navigation, route}: HomeProps): JSX.Element {
+function Home(props: HomeProps): JSX.Element {
   const dispatch = useAppDispatch();
-
-  console.log(route);
 
   const handleAdd = useCallback(() => {
     const newComment = new AddCommentPayload(
@@ -25,19 +22,19 @@ function Home({navigation, route}: HomeProps): JSX.Element {
     dispatch(addComment(newComment));
   }, [dispatch]);
 
-  const handleGoToComment = useCallback(() => {
-    navigation.navigate('CommentScreen');
-  }, [navigation]);
+  // const handleGoToComment = useCallback(() => {
+  //   navigation.navigate('CommentScreen');
+  // }, [navigation]);
 
   return (
     <ViewContainerStyled>
       <CustomHeaderStyled title="OvsNews" />
       <ViewMainStyled>
-        <PressableStyled onPress={handleGoToComment} />
+        {/*<PressableStyled onPress={handleGoToComment} />*/}
         <PressableStyled onPress={handleAdd}>
           <Text>Add comment</Text>
         </PressableStyled>
-        <CommentListStyled navigation={navigation} route={route} />
+        <CommentListStyled />
       </ViewMainStyled>
     </ViewContainerStyled>
   );

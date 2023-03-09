@@ -1,5 +1,10 @@
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {RouteProp} from '@react-navigation/native';
+import {CompositeNavigationProp, RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+/* -------------------- example -------------------- */
+/* NavigationProp */
+/* RouteProp */
 
 /* -------------------- BottomTabNavigator -------------------- */
 export type BottomTabParamList = {
@@ -7,9 +12,7 @@ export type BottomTabParamList = {
   Settings: {
     param: number;
   };
-  Comments: {
-    post: number;
-  };
+  Comments: CommentsNativeStackParamList | undefined;
 };
 
 /* NavigationProp */
@@ -51,3 +54,27 @@ export type SettingsScreenRouteProp = RouteProp<BottomTabParamList, 'Settings'>;
 
 // Comments
 export type CommentsScreenRouteProp = RouteProp<BottomTabParamList, 'Comments'>;
+
+/* -------------------- CommentsStackNavigator -------------------- */
+
+export type CommentsNativeStackParamList = {
+  CommentList: undefined;
+
+  CommentDetail: {
+    commentId: number;
+  };
+};
+
+/* NavigationProp */
+
+export type CommentListToCommentDetailNavigationProp = BottomTabNavigationProp<
+  CommentsNativeStackParamList,
+  'CommentList'
+>;
+
+/* RouteProp */
+
+export type CommentDetailScreenRouteProp = RouteProp<
+  CommentsNativeStackParamList,
+  'CommentDetail'
+>;
