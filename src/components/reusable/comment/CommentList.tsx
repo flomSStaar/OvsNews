@@ -1,18 +1,26 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
-import {FlatList, StyleProp, Text, ViewStyle} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleProp,
+  Text,
+  ViewStyle,
+} from 'react-native';
 import CommentItem from '@components/reusable/comment/CommentItem';
-import {useAppSelector} from '@store/hooks';
+import {useAppDispatch, useAppSelector} from '@store/hooks';
 import {useNavigation} from '@react-navigation/native';
 import {CommentListToCommentDetailNavigationProp} from '@src/navigators/types';
+import {fetchComments} from '@store/comments';
 
 export interface CommentListProps {
   style?: StyleProp<ViewStyle>;
 }
 
 function CommentList({style}: CommentListProps): JSX.Element {
-  const comments = useAppSelector(state => state.comments);
+  const {comments, loading, error} = useAppSelector(state => state.comments);
   const navigation = useNavigation<CommentListToCommentDetailNavigationProp>();
+  const dispatch = useAppDispatch();
 
   const onItemPress = useCallback(
     (commentId: number) => {
@@ -22,6 +30,18 @@ function CommentList({style}: CommentListProps): JSX.Element {
     },
     [navigation],
   );
+
+  useEffect(() => {
+    dispatch(fetchComments(3));
+  }, [dispatch]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (error) {
+    return <Text>{error.message}</Text>;
+  }
 
   return (
     <FlatList

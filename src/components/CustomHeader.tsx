@@ -8,7 +8,7 @@ interface CustomHeaderProps extends ViewProps {
 }
 
 function CustomHeader({title, style}: CustomHeaderProps): JSX.Element {
-  const commentsCount = useAppSelector(state => state.comments.length);
+  const commentsCount = useAppSelector(state => state.comments.comments.length);
 
   return (
     <HeaderViewStyled style={style}>
